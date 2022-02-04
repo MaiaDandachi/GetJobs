@@ -1,0 +1,48 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+  background-color: #343a40;
+  color: white;
+
+  &__logo {
+    font-weight: lighter;
+    font-size: 30px;
+  }
+
+  &__link {
+    text-decoration: none;
+    font-size: 16px;
+    padding: 0px 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: #5a9c5a;
+    }
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    margin: 10px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 16px;
+    color: #6cb266;
+  }
+}
+
+.create-btn {
+  padding: 9px 25px;
+  background-color: #6cb266;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #5a9c5a;
+  }
+}

@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar__logo">
+    <span>GetJobs</span>
+  </div>
+
+  <div>
+    <button mat-button [matMenuTriggerFor]="menu" class="navbar__button">
+      {{ userName }}
+    </button>
+    <a class="navbar__link">Logout</a>
+    <button *ngIf="type === 'client'" class="create-btn">Creat Job</button>
+  </div>
+
+  <mat-menu #menu="matMenu">
+    <ng-template matMenuContent>
+      <a href="#" mat-menu-item>Follow up</a>
+      <a href="#" mat-menu-item>Profile</a>
+    </ng-template>
+  </mat-menu>
+</nav>
