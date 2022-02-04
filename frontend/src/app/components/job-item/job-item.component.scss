@@ -1,0 +1,20 @@
+.job {
+  &__card {
+    width: 400px;
+  }
+
+  &__button {
+    background-color: #6cb266;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    font-size: 16px;
+    padding: 10px;
+    margin-left: 3px;
+
+    &:hover {
+      background-color: #5a9c5a;
+    }
+  }
+}
