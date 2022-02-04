@@ -1,0 +1,14 @@
+<mat-grid-list
+  [cols]="columns"
+  rowHeight="300px"
+  (window:resize)="onResize($event)"
+>
+  <mat-grid-tile *ngFor="let job of jobs">
+    <app-job-item
+      userType="freelancer"
+      jobTitle="{{ job.jobTitle }}"
+      joPosterName="{{ job.joPosterName }}"
+      jobDesription="{{ job.jobDesription }}"
+    ></app-job-item>
+  </mat-grid-tile>
+</mat-grid-list>
