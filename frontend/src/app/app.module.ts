@@ -11,6 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { JobItemComponent } from './components/jobs/job-item/job-item.component';
 import { JobsListComponent } from './components/jobs/jobs-list/jobs-list.component';
 import { ProfileComponent } from './components/profile-page/profile.component';
+import { FollowUpPageComponent } from './components/follow-up-page/follow-up-page.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ProfileComponent } from './components/profile-page/profile.component';
     JobItemComponent,
     JobsListComponent,
     ProfileComponent,
+    FollowUpPageComponent,
   ],
   imports: [
     BrowserModule,

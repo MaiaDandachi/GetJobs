@@ -7,6 +7,7 @@ import { Job } from '../../../_models/Job';
 })
 export class JobsListComponent implements OnInit {
   @Input() jobs: Job[];
+  @Input() currentPage: string;
   columns: number;
   constructor() {}
 

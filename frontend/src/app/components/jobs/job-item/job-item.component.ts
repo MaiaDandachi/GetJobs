@@ -10,6 +10,9 @@ export class JobItemComponent implements OnInit {
   @Input() jobTitle: string;
   @Input() joPosterName: string;
   @Input() jobDesription: string;
+  @Input() jobStatus: string;
+  @Input() currentPage: string;
+
   constructor() {}
 
   ngOnInit(): void {}

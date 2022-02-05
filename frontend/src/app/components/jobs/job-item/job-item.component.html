@@ -5,8 +5,15 @@
     {{ jobDesription }}
   </mat-card-content>
   <mat-card-actions align="start">
-    <button class="job__button" *ngIf="userType === 'freelancer'" mat-button>
+    <button
+      class="job__button"
+      *ngIf="userType === 'freelancer' && currentPage !== 'followUp'"
+      mat-button
+    >
       Apply
+    </button>
+    <button *ngIf="jobStatus && currentPage === 'followUp'" class="job__button">
+      {{ jobStatus }}
     </button>
   </mat-card-actions>
 </mat-card>
