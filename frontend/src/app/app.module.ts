@@ -10,6 +10,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { JobItemComponent } from './components/jobs/job-item/job-item.component';
 import { JobsListComponent } from './components/jobs/jobs-list/jobs-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { JobsListComponent } from './components/jobs/jobs-list/jobs-list.compone
     HeaderComponent,
     JobItemComponent,
     JobsListComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
