@@ -19,6 +19,7 @@ import { ProfileComponent } from './components/profile-page/profile.component';
 import { FollowUpPageComponent } from './components/follow-up-page/follow-up-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { JobCreateComponent } from './components/jobs/job-create/job-create.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RegisterComponent } from './components/register/register.component';
     FollowUpPageComponent,
     LoginComponent,
     RegisterComponent,
+    JobCreateComponent,
   ],
   imports: [
     BrowserModule,

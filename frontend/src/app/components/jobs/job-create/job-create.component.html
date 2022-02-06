@@ -1,0 +1,45 @@
+<div class="container">
+  <h1 class="form__title">Create a new job!</h1>
+  <form
+    class="form__container"
+    [formGroup]="addJobForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field style="width: 85%" appearance="standard">
+      <mat-label>Job Title</mat-label>
+      <input matInput formControlName="jobTitle" type="text" />
+    </mat-form-field>
+    <div *ngIf="submitted && f['jobTitle'].errors" class="form__invalid">
+      <div
+        *ngIf="
+          f['jobTitle'].errors['minlength'] || f['jobTitle'].errors['required']
+        "
+      >
+        Invalid Input length
+      </div>
+    </div>
+
+    <mat-form-field style="width: 85%" appearance="standard">
+      <mat-label>Job Description</mat-label>
+      <textarea
+        matInput
+        formControlName="jobDescription"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="10"
+      ></textarea>
+    </mat-form-field>
+    <div *ngIf="submitted && f['jobDescription'].errors" class="form__invalid">
+      <div
+        *ngIf="
+          f['jobDescription'].errors['minlength'] ||
+          f['jobDescription'].errors['required']
+        "
+      >
+        Invalid Input length
+      </div>
+    </div>
+
+    <button class="form__submitBtn">Add</button>
+  </form>
+</div>
