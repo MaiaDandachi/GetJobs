@@ -1,0 +1,41 @@
+<div class="container">
+  <h1 class="form__title">Login</h1>
+  <form class="form__container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field style="width: 60%" appearance="standard">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+    <div *ngIf="submitted && f['email'].errors" class="form__invalid">
+      <div *ngIf="f['email'].errors['required']">Email is required</div>
+      <div *ngIf="f['email'].errors['email']">
+        Email must be a valid email address
+      </div>
+    </div>
+
+    <mat-form-field style="width: 60%" appearance="standard">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        formControlName="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+        class="icon"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <div *ngIf="submitted && f['password'].errors" class="form__invalid">
+      <div *ngIf="f['password'].errors['required']">Password is required</div>
+      <div *ngIf="f['password'].errors['minlength']">Password is invalid</div>
+    </div>
+
+    <button class="form__submitBtn">Login</button>
+  </form>
+  <div class="login__link">A new member? <a href="#">Register</a></div>
+</div>
