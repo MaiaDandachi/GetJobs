@@ -1,0 +1,84 @@
+<div class="container">
+  <h1 class="form__title">Register</h1>
+  <form
+    class="form__container"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field style="width: 60%" appearance="standard">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" type="text" />
+    </mat-form-field>
+    <div *ngIf="submitted && f['username'].errors" class="form__invalid">
+      <div *ngIf="f['username'].errors['required']">Username is required</div>
+    </div>
+
+    <mat-form-field style="width: 60%" appearance="standard">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+    <div *ngIf="submitted && f['email'].errors" class="form__invalid">
+      <div *ngIf="f['email'].errors['required']">Email is required</div>
+      <div *ngIf="f['email'].errors['email']">
+        Email must be a valid email address
+      </div>
+    </div>
+
+    <mat-form-field style="width: 60%" appearance="standard">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hidePwd ? 'password' : 'text'"
+        formControlName="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePwd = !hidePwd"
+        [attr.aria-label]="'hidePwd password'"
+        [attr.aria-pressed]="hidePwd"
+        class="icon"
+      >
+        <mat-icon>{{ hidePwd ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <div *ngIf="submitted && f['password'].errors" class="form__invalid">
+      <div *ngIf="f['password'].errors['required']">Password is required</div>
+      <div *ngIf="f['password'].errors['minlength']">Password is invalid</div>
+    </div>
+
+    <mat-form-field style="width: 60%" appearance="standard">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        matInput
+        [type]="hideConfirmPwd ? 'password' : 'text'"
+        formControlName="confirmPassword"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hideConfirmPwd = !hideConfirmPwd"
+        [attr.aria-label]="'hideConfirmPwd password'"
+        [attr.aria-pressed]="hideConfirmPwd"
+        class="icon"
+      >
+        <mat-icon>{{
+          hideConfirmPwd ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <div *ngIf="submitted && f['confirmPassword'].errors" class="form__invalid">
+      <div *ngIf="f['confirmPassword'].errors['required']">
+        Password is required
+      </div>
+      <div *ngIf="f['confirmPassword'].errors['mustMatch']">
+        Passwords must match
+      </div>
+    </div>
+
+    <mat-checkbox formControlName="userRoleControl">Client</mat-checkbox>
+
+    <button class="form__submitBtn">Register</button>
+  </form>
+  <div class="regisetr__link">Already a member? <a href="#">Login</a></div>
+</div>

@@ -8,6 +8,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
@@ -17,6 +18,7 @@ import { JobsListComponent } from './components/jobs/jobs-list/jobs-list.compone
 import { ProfileComponent } from './components/profile-page/profile.component';
 import { FollowUpPageComponent } from './components/follow-up-page/follow-up-page.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { LoginComponent } from './components/login/login.component';
     ProfileComponent,
     FollowUpPageComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { LoginComponent } from './components/login/login.component';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
