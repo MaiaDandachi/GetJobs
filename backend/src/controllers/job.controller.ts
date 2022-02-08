@@ -23,7 +23,7 @@ import {JobRepository} from '../repositories';
 export class JobController {
   constructor(
     @repository(JobRepository)
-    public jobRepository : JobRepository,
+    public jobRepository: JobRepository,
   ) {}
 
   @post('/jobs')
@@ -52,9 +52,7 @@ export class JobController {
     description: 'Job model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Job) where?: Where<Job>,
-  ): Promise<Count> {
+  async count(@param.where(Job) where?: Where<Job>): Promise<Count> {
     return this.jobRepository.count(where);
   }
 
@@ -70,10 +68,26 @@ export class JobController {
       },
     },
   })
-  async find(
-    @param.filter(Job) filter?: Filter<Job>,
-  ): Promise<Job[]> {
-    return this.jobRepository.find(filter);
+  async find(@param.filter(Job) filter?: Filter<Job>): Promise<Job[]> {
+    // return this.jobRepository.find({include: ['client']});
+    return this.jobRepository.find({
+      include: [
+        {
+          relation: 'client',
+          scope: {
+            // further filter the client object
+            fields: {password: false}, // dont show password
+          },
+        },
+        {
+          relation: 'freelancer',
+          scope: {
+            // further filter the freelancer object
+            fields: {password: false}, // dont show password
+          },
+        },
+      ],
+    });
   }
 
   @patch('/jobs')
@@ -106,7 +120,7 @@ export class JobController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Job, {exclude: 'where'}) filter?: FilterExcludingWhere<Job>
+    @param.filter(Job, {exclude: 'where'}) filter?: FilterExcludingWhere<Job>,
   ): Promise<Job> {
     return this.jobRepository.findById(id, filter);
   }
