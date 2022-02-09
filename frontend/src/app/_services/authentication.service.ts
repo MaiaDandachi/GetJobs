@@ -37,7 +37,7 @@ export class AuthenticationService {
             'userInfo',
             JSON.stringify({ ...user, userType })
           );
-          this.userSubject.next(user);
+          this.userSubject.next({ ...user, userType });
           return user;
         })
       );
