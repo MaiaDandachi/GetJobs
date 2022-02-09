@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, JobService } from '@app/_services';
+import { JobService } from '@app/_services';
 
 import { Job } from '@app/_models/Job';
 import { first } from 'rxjs/operators';
-import { User } from '@app/_models/user';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',

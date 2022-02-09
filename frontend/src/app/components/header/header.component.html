@@ -13,7 +13,7 @@
       {{ user.username }}
     </button>
     <a *ngIf="user" class="navbar__link" (click)="logout()">Logout</a>
-    <button *ngIf="user.userType === 'clients'" class="create__btn">
+    <button *ngIf="user?.userType === 'clients'" class="create__btn">
       <a class="create__link" routerLink="create-job">Create Job</a>
     </button>
   </div>

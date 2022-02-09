@@ -7,17 +7,17 @@ import { environment } from '@environments/environment';
 export class ClientService {
   constructor(private http: HttpClient) {}
 
-  getClientrById(id: number) {
+  getClientrById(id: string) {
     return this.http.get<any>(`${environment.apiUrl}/clients/${id}`);
   }
 
-  updateClientById(newClient: any, id: number) {
+  updateClientById(newClient: any, id: string) {
     return this.http.patch<any>(`${environment.apiUrl}/clients/${id}`, {
       ...newClient,
     });
   }
 
-  getClientJobs(id: number) {
+  getClientJobs(id: string) {
     return this.http.get<any>(`${environment.apiUrl}/clients/${id}/jobs`);
   }
 }

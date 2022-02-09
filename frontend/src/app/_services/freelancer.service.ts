@@ -7,17 +7,17 @@ import { environment } from '@environments/environment';
 export class FreelancerService {
   constructor(private http: HttpClient) {}
 
-  getFreelancerById(id: number) {
+  getFreelancerById(id: string) {
     return this.http.get<any>(`${environment.apiUrl}/freelancers/${id}`);
   }
 
-  updateFreelancerById(newFreelancer: any, id: number) {
+  updateFreelancerById(newFreelancer: any, id: string) {
     return this.http.patch<any>(`${environment.apiUrl}/freelancer/${id}`, {
       ...newFreelancer,
     });
   }
 
-  getFreelancerJobs(id: number) {
+  getFreelancerJobs(id: string) {
     return this.http.get<any>(`${environment.apiUrl}/freelancers/${id}/jobs`);
   }
 }
