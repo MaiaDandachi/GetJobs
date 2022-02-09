@@ -15,7 +15,7 @@ export class JobService {
     title: string,
     description: string,
     status: string,
-    clientId: number
+    clientId: string
   ) {
     return this.http.post<any>(`${environment.apiUrl}/jobs`, {
       title,
