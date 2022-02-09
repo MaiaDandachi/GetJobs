@@ -10,6 +10,16 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
 
+import {AuthenticationComponent} from '@loopback/authentication';
+import {
+  JWTAuthenticationComponent,
+  SECURITY_SCHEME_SPEC,
+  UserServiceBindings,
+  TokenServiceBindings,
+} from '@loopback/authentication-jwt';
+import {MongoDataSource} from './datasources';
+import {JWTCustomService} from './services/jwt.service';
+
 export {ApplicationConfig};
 
 export class BackendApplication extends BootMixin(
@@ -17,6 +27,8 @@ export class BackendApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    this.setUpBindings();
 
     // Set up the custom sequence
     this.sequence(MySequence);
@@ -40,5 +52,16 @@ export class BackendApplication extends BootMixin(
         nested: true,
       },
     };
+
+    // Mount authentication system
+    this.component(AuthenticationComponent);
+    // Mount jwt component
+    this.component(JWTAuthenticationComponent);
+    // Bind datasource
+    this.dataSource(MongoDataSource, UserServiceBindings.DATASOURCE_NAME);
+  }
+
+  setUpBindings(): void {
+    this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(JWTCustomService);
   }
 }
