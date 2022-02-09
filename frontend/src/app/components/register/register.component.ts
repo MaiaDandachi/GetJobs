@@ -5,7 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MustMatch } from '@app/_helpers';
+import { AuthenticationService } from '@app/_services';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +19,8 @@ export class RegisterComponent implements OnInit {
   hidePwd = true;
   hideConfirmPwd = true;
   submitted = false;
+  loading = false;
+  error = '';
 
   formOptions: AbstractControlOptions = {
     validators: MustMatch('password', 'confirmPassword'),
@@ -38,7 +43,11 @@ export class RegisterComponent implements OnInit {
     this.formOptions
   );
 
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -49,9 +58,33 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
     if (this.registerForm.invalid) {
       return;
     }
-    console.log(this.registerForm.value);
+
+    this.loading = true;
+    const userType = this.registerForm.value['userRoleControl']
+      ? 'clients'
+      : 'freelancers';
+
+    this.authenticationService
+      .signup(
+        this.registerForm.value['username'],
+        this.registerForm.value['email'],
+        this.registerForm.value['password'],
+        userType
+      )
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.error = error;
+          this.loading = false;
+        },
+      })
+      .add(() => (this.loading = false));
   }
 }

@@ -49,4 +49,12 @@ export class AuthenticationService {
     this.userSubject.next(null!);
     this.router.navigate(['/login']);
   }
+
+  signup(username: string, email: string, password: string, userType: string) {
+    return this.http.post<any>(`${environment.apiUrl}/${userType}`, {
+      username,
+      email,
+      password,
+    });
+  }
 }
