@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,6 +21,7 @@ import {
 import {Job} from '../models';
 import {JobRepository} from '../repositories';
 
+@authenticate('jwt')
 export class JobController {
   constructor(
     @repository(JobRepository)

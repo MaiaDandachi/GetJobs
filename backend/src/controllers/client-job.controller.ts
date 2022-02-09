@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -15,16 +16,14 @@ import {
   post,
   requestBody,
 } from '@loopback/rest';
-import {
-  Client,
-  Job,
-} from '../models';
+import {Client, Job} from '../models';
 import {ClientRepository} from '../repositories';
 
+@authenticate('jwt')
 export class ClientJobController {
   constructor(
     @repository(ClientRepository) protected clientRepository: ClientRepository,
-  ) { }
+  ) {}
 
   @get('/clients/{id}/jobs', {
     responses: {
@@ -61,11 +60,12 @@ export class ClientJobController {
           schema: getModelSchemaRef(Job, {
             title: 'NewJobInClient',
             exclude: ['id'],
-            optional: ['clientId']
+            optional: ['clientId'],
           }),
         },
       },
-    }) job: Omit<Job, 'id'>,
+    })
+    job: Omit<Job, 'id'>,
   ): Promise<Job> {
     return this.clientRepository.jobs(id).create(job);
   }

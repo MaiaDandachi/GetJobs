@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -18,6 +19,7 @@ import {
 import {Freelancer, Job} from '../models';
 import {FreelancerRepository} from '../repositories';
 
+@authenticate('jwt')
 export class FreelancerJobController {
   constructor(
     @repository(FreelancerRepository)
