@@ -1,6 +1,7 @@
 .job {
   &__card {
-    width: 90%;
+    min-width: 300px;
+    max-width: 450px;
   }
 
   &__button {

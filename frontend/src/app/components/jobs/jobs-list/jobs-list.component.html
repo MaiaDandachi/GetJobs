@@ -5,11 +5,11 @@
 >
   <mat-grid-tile *ngFor="let job of jobs">
     <app-job-item
-      userType="freelancer"
-      jobTitle="{{ job.jobTitle }}"
-      joPosterName="{{ job.joPosterName }}"
-      jobDesription="{{ job.jobDesription }}"
-      jobStatus="{{ job.jobStatus }}"
+      userType="{{ user.userType }}"
+      jobTitle="{{ job.title }}"
+      joPosterName="{{ job.client?.username }}"
+      jobDesription="{{ job.description }}"
+      jobStatus="{{ job.status }}"
       currentPage="{{ currentPage }}"
     ></app-job-item>
   </mat-grid-tile>

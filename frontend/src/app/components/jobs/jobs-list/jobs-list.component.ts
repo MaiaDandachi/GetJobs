@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AuthenticationService } from '@app/_services';
+import { User } from '@app/_models/user';
 import { Job } from '../../../_models/Job';
 @Component({
   selector: 'app-jobs-list',
@@ -9,7 +11,11 @@ export class JobsListComponent implements OnInit {
   @Input() jobs: Job[];
   @Input() currentPage: string;
   columns: number;
-  constructor() {}
+  user: User;
+
+  constructor(private authenticationService: AuthenticationService) {
+    this.user = this.authenticationService.userValue;
+  }
 
   // Responsive grid
   breakPoints() {
