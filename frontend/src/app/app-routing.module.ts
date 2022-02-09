@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { FollowUpPageComponent } from './components/follow-up-page/follow-up-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { JobCreateComponent } from './components/jobs/job-create/job-create.component';
+import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile-page/profile.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     component: HomePageComponent,
     path: '',
+  },
+  {
+    component: LoginComponent,
+    path: 'login',
+  },
+  {
+    component: RegisterComponent,
+    path: 'register',
   },
 ];
 
