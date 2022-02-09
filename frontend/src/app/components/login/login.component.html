@@ -35,6 +35,8 @@
       <div *ngIf="f['password'].errors['minlength']">Password is invalid</div>
     </div>
 
+    <mat-checkbox formControlName="userRoleControl">Client</mat-checkbox>
+
     <button class="form__submitBtn">Login</button>
   </form>
   <div class="login__link">A new member? <a href="#">Register</a></div>
