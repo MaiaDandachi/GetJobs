@@ -22,7 +22,7 @@ import { FollowUpPageComponent } from './components/follow-up-page/follow-up-pag
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { JobCreateComponent } from './components/jobs/job-create/job-create.component';
-import { ErrorInterceptor } from './_helpers';
+import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,7 @@ import { ErrorInterceptor } from './_helpers';
     MatCheckboxModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
