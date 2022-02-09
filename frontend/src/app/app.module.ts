@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { FollowUpPageComponent } from './components/follow-up-page/follow-up-pag
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { JobCreateComponent } from './components/jobs/job-create/job-create.component';
+import { ErrorInterceptor } from './_helpers';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,9 @@ import { JobCreateComponent } from './components/jobs/job-create/job-create.comp
     MatInputModule,
     MatCheckboxModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
