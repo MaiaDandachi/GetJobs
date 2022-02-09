@@ -1,6 +1,18 @@
 export interface Job {
-  jobTitle: string;
-  joPosterName: string;
-  jobDesription: string;
-  jobStatus?: string;
+  id: string;
+  title: string;
+  description: string;
+  clientId: string;
+  status: string;
+  freelancerId?: string;
+  client?: {
+    username: string;
+    email: string;
+    id: string;
+  };
+  freelancer?: {
+    username: string;
+    email: string;
+    id: string;
+  };
 }
