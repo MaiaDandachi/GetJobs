@@ -1,3 +1,9 @@
+import {inject} from '@loopback/core';
+import {Credentials, TokenServiceBindings} from '@loopback/authentication-jwt';
+import {authenticate, TokenService} from '@loopback/authentication';
+import {SecurityBindings, UserProfile, securityId} from '@loopback/security';
+import {genSalt, hash, compare} from 'bcryptjs';
+
 import {
   Count,
   CountSchema,
@@ -16,16 +22,118 @@ import {
   del,
   requestBody,
   response,
+  SchemaObject,
+  HttpErrors,
 } from '@loopback/rest';
 import {Client} from '../models';
 import {ClientRepository} from '../repositories';
+import {validateCredentials} from '../services/validator';
+import _ from 'lodash';
+import {JWTCustomService} from '../services/jwt.service';
 
+const CredentialsSchema: SchemaObject = {
+  type: 'object',
+  required: ['email', 'password'],
+  properties: {
+    email: {
+      type: 'string',
+      format: 'email',
+    },
+    password: {
+      type: 'string',
+      minLength: 8,
+    },
+  },
+};
+
+export const CredentialsRequestBody = {
+  description: 'The input of login function',
+  required: true,
+  content: {
+    'application/json': {schema: CredentialsSchema},
+  },
+};
+@authenticate('jwt')
 export class ClientController {
   constructor(
+    @inject(TokenServiceBindings.TOKEN_SERVICE)
+    public jwtService: JWTCustomService,
+    @inject(SecurityBindings.USER, {optional: true})
+    public user: UserProfile,
     @repository(ClientRepository)
-    public clientRepository : ClientRepository,
+    public clientRepository: ClientRepository,
   ) {}
 
+  @authenticate.skip()
+  @post('/clients/login', {
+    responses: {
+      '200': {
+        description: 'Token',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                token: {
+                  type: 'string',
+                },
+                id: {
+                  type: 'string',
+                },
+                email: {
+                  type: 'string',
+                },
+                username: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+  async login(
+    @requestBody(CredentialsRequestBody) credentials: Credentials,
+  ): Promise<{token: string; id: string; email: string; username: string}> {
+    const {email, password} = credentials;
+    const invalidCredentialsError = 'Invalid email or password.';
+
+    // ensure the user exists, and the password is correct
+    if (!email) {
+      throw new HttpErrors.Unauthorized(invalidCredentialsError);
+    }
+
+    const foundUser = await this.clientRepository.findOne({
+      where: {email},
+    });
+    if (!foundUser) {
+      throw new HttpErrors.Unauthorized(invalidCredentialsError);
+    }
+
+    const passwordMatched = await compare(password, foundUser.password);
+
+    if (!passwordMatched) {
+      throw new HttpErrors.Unauthorized(invalidCredentialsError);
+    }
+
+    const userProfile: UserProfile = {
+      [securityId]: foundUser.id!,
+      name: foundUser.username,
+      id: foundUser.id,
+    };
+
+    // create a JSON Web Token based on the user profile
+    const token = await this.jwtService.generateToken(userProfile);
+    return {
+      token,
+      id: foundUser.id!,
+      email: foundUser.email,
+      username: foundUser.username,
+    };
+  }
+
+  @authenticate.skip()
   @post('/clients')
   @response(200, {
     description: 'Client model instance',
@@ -44,7 +152,18 @@ export class ClientController {
     })
     client: Omit<Client, 'id'>,
   ): Promise<Client> {
-    return this.clientRepository.create(client);
+    // ensure a valid email value and password value
+    validateCredentials(_.pick(client, ['email', 'password']));
+
+    const foundUser = await this.clientRepository.findOne({
+      where: {email: client.email},
+    });
+
+    if (foundUser) throw new HttpErrors.Conflict('email already exists');
+
+    const password = await hash(client.password, await genSalt());
+
+    return this.clientRepository.create({...client, password});
   }
 
   @get('/clients/count')
@@ -52,9 +171,7 @@ export class ClientController {
     description: 'Client model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Client) where?: Where<Client>,
-  ): Promise<Count> {
+  async count(@param.where(Client) where?: Where<Client>): Promise<Count> {
     return this.clientRepository.count(where);
   }
 
@@ -70,9 +187,7 @@ export class ClientController {
       },
     },
   })
-  async find(
-    @param.filter(Client) filter?: Filter<Client>,
-  ): Promise<Client[]> {
+  async find(@param.filter(Client) filter?: Filter<Client>): Promise<Client[]> {
     return this.clientRepository.find(filter);
   }
 
@@ -106,7 +221,8 @@ export class ClientController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Client, {exclude: 'where'}) filter?: FilterExcludingWhere<Client>
+    @param.filter(Client, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Client>,
   ): Promise<Client> {
     return this.clientRepository.findById(id, filter);
   }
