@@ -75,3 +75,8 @@ body {
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background-color: green !important;
 }
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: green;
+}
