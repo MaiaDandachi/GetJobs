@@ -89,6 +89,9 @@ export class JobController {
           },
         },
       ],
+      where: {
+        status: {neq: 'in-progress'},
+      },
     });
   }
 
