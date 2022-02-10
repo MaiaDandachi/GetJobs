@@ -14,6 +14,15 @@ npm start
 npm install
 npm start
 ```
+## Testing Users Credentials
+```
+email: client@xyz.com
+password: 12345678
+
+email: john@freelancer.com
+password: 12345678
+
+```
 
 ## Used Technologies
 - Angular 13.
