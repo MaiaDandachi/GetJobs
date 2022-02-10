@@ -7,8 +7,13 @@
   <mat-card-actions align="start">
     <button
       class="job__button"
-      *ngIf="userType === 'freelancers' && currentPage !== 'followUp'"
+      *ngIf="
+        userType === 'freelancers' &&
+        currentPage !== 'followUp' &&
+        jobStatus !== 'in-progress'
+      "
       mat-button
+      (click)="applyForJob()"
     >
       Apply
     </button>

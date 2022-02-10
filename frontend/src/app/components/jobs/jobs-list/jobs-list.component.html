@@ -5,7 +5,9 @@
 >
   <mat-grid-tile *ngFor="let job of jobs">
     <app-job-item
+      userId="{{ user.id }}"
       userType="{{ user.userType }}"
+      jobId="{{ job.id }}"
       jobTitle="{{ job.title }}"
       joPosterName="{{ job.client?.username }}"
       jobDesription="{{ job.description }}"
